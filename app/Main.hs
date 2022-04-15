@@ -3,15 +3,35 @@ module Main where
 main :: IO ()
 main = putStrLn myhtml
 
-myhtml = makeHtml "A title" "some content"
+myhtml :: String
+myhtml = makeHtml "A title" "some updated content"
 
-makeHtml title content = html_ (head_ (title_ title) <> body_ content)
+makeHtml :: String -> String -> String
+makeHtml title content =
+  html_
+    ( head_
+        (title_ title)
+        <> body_ (h1_ content)
+    )
 
-head_ content = "<head>" <> content <> "</head>"
+head_ :: String -> String
+head_ = el "head"
 
-title_ content = "<title>" <> content <> "</title>"
+title_ :: String -> String
+title_ = el "title"
 
-html_ content = "<html>" <> content <> "</html>"
+html_ :: String -> String
+html_ = el "html"
 
-body_ content = "<body>" <> content <> "</body>"
+body_ :: String -> String
+body_ = el "body"
 
+p_ :: String -> String
+p_ = el "p"
+
+h1_ :: String -> String
+h1_ = el "h1"
+
+el :: String -> String -> String
+el tag content =
+  "<" <> tag <> ">" <> content <> "</" <> tag <> ">"
