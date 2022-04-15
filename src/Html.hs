@@ -1,15 +1,15 @@
 module Html
-  ( Html
-  , Title
-  , Structure
-  , html_
-  , p_
-  , h1_
-  , append_
-  , render
+  ( Html,
+    Title,
+    Structure,
+    html_,
+    p_,
+    h1_,
+    append_,
+    render,
   )
-  where
-      
+where
+
 newtype Html = Html String
 
 newtype Structure = Structure String
@@ -21,7 +21,7 @@ html_ title content =
   Html
     ( el
         "html"
-        ( el "head" (el "title" title)
+        ( el "head" (el "title" (escape title))
             <> el "body" (getStructureString content)
         )
     )
@@ -36,11 +36,23 @@ render :: Html -> String
 render (Html content) = content
 
 p_ :: String -> Structure
-p_ = Structure . el "p"
+p_ = Structure . el "p" . escape
 
 h1_ :: String -> Structure
-h1_ = Structure . el "h1"
+h1_ = Structure . el "h1" . escape
 
 el :: String -> String -> String
 el tag content =
   "<" <> tag <> ">" <> content <> "</" <> tag <> ">"
+
+escape :: String -> String
+escape =
+  let escapeChar c =
+        case c of
+          '<' -> "&lt;"
+          '>' -> "&gt;"
+          '&' -> "&amp;"
+          '"' -> "&quot;"
+          '\'' -> "&#39;"
+          _ -> [c]
+   in concatMap escapeChar
