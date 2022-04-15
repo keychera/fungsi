@@ -4,14 +4,17 @@ main :: IO ()
 main = putStrLn myhtml
 
 myhtml :: String
-myhtml = makeHtml "A title" "some updated content"
+myhtml = 
+    makeHtml 
+        "A title"
+        (h1_ "Hello, world!" <> p_ "Let's learn about Haskell!")
 
 makeHtml :: String -> String -> String
 makeHtml title content =
   html_
     ( head_
         (title_ title)
-        <> body_ (h1_ content)
+        <> body_ content
     )
 
 head_ :: String -> String
