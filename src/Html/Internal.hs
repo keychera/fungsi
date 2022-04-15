@@ -35,6 +35,18 @@ el :: String -> String -> String
 el tag content =
   "<" <> tag <> ">" <> content <> "</" <> tag <> ">"
 
+ul_ :: [Structure] -> Structure
+ul_ = l_ "ul"
+
+ol_ :: [Structure] -> Structure
+ol_ = l_ "ol"
+
+code_ :: String -> Structure
+code_ = Structure . el "pre"
+
+l_ :: String -> [Structure] -> Structure
+l_ listType = Structure . el listType . concatMap (el "li" . getStructureString)
+
 escape :: String -> String
 escape =
   let escapeChar c =

@@ -13,6 +13,13 @@ myhtml =
         (h1_ "Heading")
         ( append_
             (p_ "Paragraph #1")
-            (p_ "Paragraph #2 that has <>")
+            ( append_
+                (code_ "code #2 that has <>")
+                -- (p_ "Paragraph #2 that has <>")
+                (ul_ (map (listItem . show) [1 .. 10]))
+            )
         )
     )
+
+listItem :: String -> Structure
+listItem content = p_ ("item #" <> content)
