@@ -28,6 +28,7 @@ library
       Html
       Html.Internal
       Lib
+      Markup
   other-modules:
       Paths_fungsi
   hs-source-dirs:
